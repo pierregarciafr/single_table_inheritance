@@ -1,0 +1,38 @@
+<h1>New</h1>
+<%= form_for @animal do |f| %>
+
+  <% if @animal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@animal.errors.count, "error") %> prohibited this animal from being saved:</h2>
+
+      <ul>
+      <% @animal.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :age %><br>
+    <%= f.text_field :age %>
+  </div>
+  <div class="field">
+    <%= f.label :race %><br>
+    <%= f.select :race, Animal.races.map {|race| [race.humanize, race.camelcase]}, {}, disabled: @race != 'Animal' %>
+  </div>
+  <div class="field">
+    <%= f.label :tribe %><br>
+    <%= f.select(:tribe_id, Tribe.all.collect {|u| [u.name, u.id]}, :prompt => 'Select') %>
+
+    <%#= f.select :tribe_id, Tribe.all.map {|tribe| [tribe.name.humanize, tribe]}, {} %>
+  </div>
+  <%= f.submit %>
+<% end %>
+
+
+
