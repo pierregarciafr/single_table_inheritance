@@ -1,24 +1,29 @@
 class AnimalsController < ApplicationController
   before_action :set_race
+  before_action :set_animal, only: [:show, :edit, :destroy]
 
   def index
     @animals = race_class.all
   end
 
   def show
-    @animal = Animal.find(params[:id])
   end
 
   def new
-    @animal = Animal.new
+    @animal = race_class.new
+
   end
 
   def create
-    @animal = Animal.find(animal_params[:id])
+    @animal = race_class.new(animal_params)
+    if @animal.save
+      redirect_to @animal, notice: "#{race} was successfully created."
+    else
+      render action: 'new'
+    end
   end
 
   def edit
-    @animal = Animal.find(params[:id])
   end
 
   def update
@@ -26,7 +31,6 @@ class AnimalsController < ApplicationController
   end
 
   def destroy
-    @animal = Animal.find(params[:id])
   end
 
   private
@@ -43,7 +47,11 @@ class AnimalsController < ApplicationController
     race.constantize
   end
 
+  def set_animal
+    @animal = race_class.find(params[:id])
+  end
+
   def animal_params
-    params.require(:animal).permit(:name, :age, :race)
+    params.require(race.underscore.to_sym).permit(:name, :age, :race, :tribe_id)
   end
 end

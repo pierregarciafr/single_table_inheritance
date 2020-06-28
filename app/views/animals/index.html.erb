@@ -1,5 +1,6 @@
-<h1>Animal index</h1>
-<%= link_to 'Create', new_animal_path %>
+<h1><%= @race %> index</h1>
+<%= link_to "New #{@race}", sti_animal_path(@race, nil, :new) %>
+<%= link_to 'See all animals', sti_animal_path if @race != 'Animal' %>
 <table>
   <thead>
     <tr>
@@ -9,16 +10,21 @@
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
     <% @animals.each do |animal| %>
         <tr>
           <th><%= animal.name %></th>
           <th><%= animal.age %></th>
           <th><%= animal.race %></th>
-          <th><%= link_to 'Show', animal_path(animal) %></th>
+          <th><%= link_to 'Show', sti_animal_path(animal.race, animal) %></th>
           <th><%= link_to 'Edit', edit_animal_path(animal) %></th>
           <th><%= link_to 'Delete', animal_path(animal), method: :delete, data: { confirm: 'Are u sure ?' } %></th>
+          <th>
+              <%= link_to "See all #{animal.race.pluralize}", sti_animal_path(animal.race) if @race == 'Animal' %>
+          </th>
         </tr>
     <% end %>
   </thead>
+
 </table>
