@@ -1,0 +1,24 @@
+<h1>Animal index</h1>
+<%= link_to 'Create', new_animal_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Race</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @animals.each do |animal| %>
+        <tr>
+          <th><%= animal.name %></th>
+          <th><%= animal.age %></th>
+          <th><%= animal.race %></th>
+          <th><%= link_to 'Show', animal_path(animal) %></th>
+          <th><%= link_to 'Edit', edit_animal_path(animal) %></th>
+          <th><%= link_to 'Delete', animal_path(animal), method: :delete, data: { confirm: 'Are u sure ?' } %></th>
+        </tr>
+    <% end %>
+  </thead>
+</table>
